@@ -102,8 +102,8 @@ class PostService
 
     /**
      * 已发布文章查询
-     * @param  int $postId     文章id
-     * @param int  $categoryId 分类id
+     * @param  int $postId 文章id
+     * @param int $categoryId 分类id
      * @return array|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -151,7 +151,7 @@ class PostService
 
     /**
      * 上一篇文章
-     * @param int $postId     文章id
+     * @param int $postId 文章id
      * @param int $categoryId 分类id
      * @return array|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -168,13 +168,13 @@ class PostService
                 'post.post_type'   => 1,
                 'post.post_status' => 1,
                 'post.delete_time' => 0,
-                'post.id '         => ['<', $postId]
             ];
 
             $article = $portalPostModel
                 ->alias('post')
                 ->field('post.*')
                 ->where($where)
+                ->where('post.id', '<', $postId)
                 ->where('post.published_time', ['< time', time()], ['> time', 0], 'and')
                 ->order('id', 'DESC')
                 ->find();
@@ -185,7 +185,6 @@ class PostService
                 'post.post_status'     => 1,
                 'post.delete_time'     => 0,
                 'relation.category_id' => $categoryId,
-                'relation.post_id'     => ['<', $postId]
             ];
 
             $join    = [
@@ -196,6 +195,7 @@ class PostService
                 ->field('post.*')
                 ->join($join)
                 ->where($where)
+                ->where('relation.post_id', '<', $postId)
                 ->where('post.published_time', ['< time', time()], ['> time', 0], 'and')
                 ->order('id', 'DESC')
                 ->find();
@@ -207,7 +207,7 @@ class PostService
 
     /**
      * 下一篇文章
-     * @param int $postId     文章id
+     * @param int $postId 文章id
      * @param int $categoryId 分类id
      * @return array|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -224,11 +224,11 @@ class PostService
                 'post.post_type'   => 1,
                 'post.post_status' => 1,
                 'post.delete_time' => 0,
-                'post.id'          => ['>', $postId]
             ];
 
             $article = $portalPostModel->alias('post')->field('post.*')
                 ->where($where)
+                ->where('post.id', '>', $postId)
                 ->where('post.published_time', ['< time', time()], ['> time', 0], 'and')
                 ->order('id', 'ASC')
                 ->find();
@@ -238,7 +238,7 @@ class PostService
                 'post.post_status'     => 1,
                 'post.delete_time'     => 0,
                 'relation.category_id' => $categoryId,
-                'relation.post_id'     => ['>', $postId]
+
             ];
 
             $join    = [
@@ -247,6 +247,7 @@ class PostService
             $article = $portalPostModel->alias('post')->field('post.*')
                 ->join($join)
                 ->where($where)
+                ->where('relation.post_id', '>', $postId)
                 ->where('post.published_time', ['< time', time()], ['> time', 0], 'and')
                 ->order('id', 'ASC')
                 ->find();
