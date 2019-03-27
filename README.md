@@ -8,9 +8,9 @@
 
 
 ## 安装应用
-1. 复制portal应用到hinkcmf `app`目录
+1. 复制portal应用到ThinkCMF `app`目录
 2. 执行应用下 data/portal.sql 文件安装应用数据库，注意替换表前缀
 3. 到后台菜单管理导入新菜单
 
 ## 模板插件安装
-复制它们到相应目录，再到 thinkcmf后台安装启用即可
+复制它们到相应目录，再到ThinkCMF后台安装启用即可
