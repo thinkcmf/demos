@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
+// | Copyright (c) 2013-2019 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -102,8 +102,8 @@ class PostService
 
     /**
      * 已发布文章查询
-     * @param  int $postId 文章id
-     * @param int $categoryId 分类id
+     * @param  int $postId     文章id
+     * @param int  $categoryId 分类id
      * @return array|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -151,7 +151,7 @@ class PostService
 
     /**
      * 上一篇文章
-     * @param int $postId 文章id
+     * @param int $postId     文章id
      * @param int $categoryId 分类id
      * @return array|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -207,7 +207,7 @@ class PostService
 
     /**
      * 下一篇文章
-     * @param int $postId 文章id
+     * @param int $postId     文章id
      * @param int $categoryId 分类id
      * @return array|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
