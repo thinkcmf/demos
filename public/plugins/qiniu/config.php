@@ -29,7 +29,7 @@ return [
         "message" => [
             "require" => 'SecretKey不能为空'
         ],
-        'tip'     => '<a href="https://portal.qiniu.com/signup?code=3lfihpz361o42" target="_blank">马上获取</a>, <a href="http://www.thinkcmf.com/faq.html?url=https://www.kancloud.cn/thinkcmf/faq/507454" target="_blank">查看帮助手册</a>'
+        'tip'     => '<a href="https://portal.qiniu.com/qvm/active?code=1381757652Gn5y" target="_blank">马上获取</a>, <a href="http://www.thinkcmf.com/faq.html?url=https://www.kancloud.cn/thinkcmf/faq/507454" target="_blank">查看帮助手册</a>'
     ],
     'protocol'                  => [// 在后台插件配置表单中的键名 ,会是config[select]
         'title'   => '域名协议',
