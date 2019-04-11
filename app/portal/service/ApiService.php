@@ -31,15 +31,7 @@ class ApiService
      *                     )
      *                     字段说明:
      *                     category_ids:文章所在分类,可指定一个或多个分类id,以英文逗号分隔,如1或1,2,3 默认值为全部
-     *                     field:调用指定的字段@todo
-     *                     如只调用posts表里的id和post_title字段可以是post.id,post.post_title; 默认全部,
-     *                     此方法查询时关联两个表portal_category_post(category_post),portal_post(post);
-     *                     所以最好指定一下表名,以防字段冲突
-     *                     limit:数据条数,默认值为10,可以指定从第几条开始,如3,8(表示共调用8条,从第3条开始)
-     *                     order:排序方式,如按posts表里的published_time字段倒序排列：post.published_time desc
-     *                     where:查询条件,字符串形式,和sql语句一样,请在事先做好安全过滤,最好使用第二个参数$where的数组形式进行过滤,此方法查询时关联多个表,所以最好指定一下表名,以防字段冲突,查询条件(只支持数组),格式和thinkPHP的where方法一样,此方法查询时关联多个表,所以最好指定一下表名,以防字段冲突;
-     *                     </pre>
-     * @return array 包括分页的文章列表<pre>
+     *                     field:调用指定的字段@return array 包括分页的文章列表<pre>
      *                     格式:
      *                     array(
      *                     "articles"=>array(),//文章列表,array
@@ -47,15 +39,23 @@ class ApiService
      *                     "total"=>100, //符合条件的文章总数,不分页则没有此项
      *                     "total_pages"=>5 // 总页数,不分页则没有此项
      *                     )</pre>
+     * @todo
+     *                     如只调用posts表里的id和post_title字段可以是post.id,post.post_title; 默认全部,
+     *                     此方法查询时关联两个表portal_category_post(category_post),portal_post(post);
+     *                     所以最好指定一下表名,以防字段冲突
+     *                     limit:数据条数,默认值为10,可以指定从第几条开始,如3,8(表示共调用8条,从第3条开始)
+     *                     order:排序方式,如按posts表里的published_time字段倒序排列：post.published_time desc
+     *                     where:查询条件,字符串形式,和sql语句一样,请在事先做好安全过滤,最好使用第二个参数$where的数组形式进行过滤,此方法查询时关联多个表,所以最好指定一下表名,以防字段冲突,查询条件(只支持数组),格式和thinkPHP的where方法一样,此方法查询时关联多个表,所以最好指定一下表名,以防字段冲突;
+     *                     </pre>
      */
     public static function articles($param)
     {
         $portalPostModel = new PortalPostModel();
 
         $where = [
-            'post.post_status' => 1,
-            'post.post_type'   => 1,
-            'post.delete_time' => 0
+            ['post.post_status', '=', 1],
+            ['post.post_type', '=', 1],
+            ['post.delete_time', '=', 0]
         ];
 
         $paramWhere = empty($param['where']) ? '' : $param['where'];
@@ -101,7 +101,7 @@ class ApiService
             ->where($where)
             ->where($paramWhere)
             ->where($whereCategoryId)
-            ->where('post.published_time', ['> time', 0], ['<', time()], 'and')
+            ->where('post.published_time', '>', 0)
             ->order($order)
             ->group('post.id');
 
@@ -158,15 +158,7 @@ class ApiService
      *                     'relation'=>''
      *                     )
      *                     字段说明:
-     *                     field:调用指定的字段@todo
-     *                     如只调用posts表里的id和post_title字段可以是post.id,post.post_title; 默认全部,
-     *                     此方法查询时关联两个表portal_tag_post(category_post),portal_post(post);
-     *                     所以最好指定一下表名,以防字段冲突
-     *                     limit:数据条数,默认值为10,可以指定从第几条开始,如3,8(表示共调用8条,从第3条开始)
-     *                     order:排序方式,如按posts表里的published_time字段倒序排列：post.published_time desc
-     *                     where:查询条件,字符串形式,和sql语句一样,请在事先做好安全过滤,最好使用第二个参数$where的数组形式进行过滤,此方法查询时关联多个表,所以最好指定一下表名,以防字段冲突,查询条件(只支持数组),格式和thinkPHP的where方法一样,此方法查询时关联多个表,所以最好指定一下表名,以防字段冲突;
-     *                     </pre>
-     * @return array 包括分页的文章列表<pre>
+     *                     field:调用指定的字段@return array 包括分页的文章列表<pre>
      *                     格式:
      *                     array(
      *                     "articles"=>array(),//文章列表,array
@@ -174,15 +166,23 @@ class ApiService
      *                     "total"=>100, //符合条件的文章总数,不分页则没有此项
      *                     "total_pages"=>5 // 总页数,不分页则没有此项
      *                     )</pre>
+     * @todo
+     *                     如只调用posts表里的id和post_title字段可以是post.id,post.post_title; 默认全部,
+     *                     此方法查询时关联两个表portal_tag_post(category_post),portal_post(post);
+     *                     所以最好指定一下表名,以防字段冲突
+     *                     limit:数据条数,默认值为10,可以指定从第几条开始,如3,8(表示共调用8条,从第3条开始)
+     *                     order:排序方式,如按posts表里的published_time字段倒序排列：post.published_time desc
+     *                     where:查询条件,字符串形式,和sql语句一样,请在事先做好安全过滤,最好使用第二个参数$where的数组形式进行过滤,此方法查询时关联多个表,所以最好指定一下表名,以防字段冲突,查询条件(只支持数组),格式和thinkPHP的where方法一样,此方法查询时关联多个表,所以最好指定一下表名,以防字段冲突;
+     *                     </pre>
      */
     public static function tagArticles($param)
     {
         $portalPostModel = new PortalPostModel();
 
         $where = [
-            'post.post_status' => 1,
-            'post.post_type'   => 1,
-            'post.delete_time' => 0
+            ['post.post_status', '=', 1],
+            ['post.post_type', '=', 1],
+            ['post.delete_time', '=', 0]
         ];
 
         $paramWhere = empty($param['where']) ? '' : $param['where'];
@@ -211,7 +211,7 @@ class ApiService
             ->join($join)
             ->where($where)
             ->where($paramWhere)
-            ->where('post.published_time', ['> time', 0], ['<', time()], 'and')
+            ->where('post.published_time', '>', 0)
             ->order($order);
 
         $return = [];
@@ -262,15 +262,14 @@ class ApiService
         $portalPostModel = new PortalPostModel();
 
         $where = [
-            'post_status' => 1,
-            'post_type'   => 1,
-            'id'          => $id,
-            'delete_time' => 0
+            ['post_status', '=', 1],
+            ['post_type', '=', 1],
+            ['id', '=', $id],
+            ['delete_time', '=', 0],
+            ['published_time', '>', 0]
         ];
 
-        return $portalPostModel->where($where)
-            ->where('published_time', ['> time', 0], ['<', time()], 'and')
-            ->find();
+        return $portalPostModel->where($where)->find();
     }
 
     /**
@@ -291,15 +290,15 @@ class ApiService
         $portalPostModel = new PortalPostModel();
 
         $where = [
-            'post_status' => 1,
-            'post_type'   => 2, //页面
-            'delete_time' => 0
+            ['post_status', '=', 1],
+            ['post_type', '=', 2], //页面
+            ['delete_time', '=', 0],
+            ['published_time', '>', 0]
         ];
 
         return $portalPostModel
             ->where($where)
             ->where($paramWhere)
-            ->where('published_time', [['> time', 0], ['<', time()]], 'and')
             ->order($order)
             ->select();
     }
@@ -314,15 +313,14 @@ class ApiService
         $portalPostModel = new PortalPostModel();
 
         $where = [
-            'post_status' => 1,
-            'post_type'   => 2,
-            'id'          => $id,
-            'delete_time' => 0
+            ['post_status', '=', 1],
+            ['post_type', '=', 2],
+            ['id', '=', $id],
+            ['delete_time', '=', 0],
+            ['published_time', '>', 0]
         ];
 
-        return $portalPostModel->where($where)
-            ->where('published_time', ['> time', 0], ['<', time()], 'and')
-            ->find();
+        return $portalPostModel->where($where)->find();
     }
 
     /**
@@ -335,9 +333,9 @@ class ApiService
         $portalCategoryModel = new PortalCategoryModel();
 
         $where = [
-            'status'      => 1,
-            'delete_time' => 0,
-            'id'          => $id
+            ['status', '=', 1],
+            ['delete_time', '=', 0],
+            ['id', '=', $id]
         ];
 
         return $portalCategoryModel->where($where)->find();
@@ -347,23 +345,23 @@ class ApiService
      * 返回指定分类下的子分类
      * @param int $categoryId 分类id
      * @param     $field      string  指定查询字段
-     * @throws \think\db\exception\DataNotFoundException
+     * @return false|\PDOStatement|string|\think\Collection 返回指定分类下的子分类
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
-     * @return false|\PDOStatement|string|\think\Collection 返回指定分类下的子分类
+     * @throws \think\db\exception\DataNotFoundException
      */
     public static function subCategories($categoryId, $field = '*')
     {
         $portalCategoryModel = new PortalCategoryModel();
 
         $where = [
-            'status'      => 1,
-            'delete_time' => 0,
-            'parent_id'   => $categoryId
+            ['status', '=', 1],
+            ['delete_time', '=', 0],
+            ['parent_id', '=', $categoryId]
         ];
 
-		return $portalCategoryModel->field($field)->where($where)->order('list_order ASC')->select();
-	}
+        return $portalCategoryModel->field($field)->where($where)->order('list_order ASC')->select();
+    }
 
     /**
      * 返回指定分类下的所有子分类
@@ -377,7 +375,7 @@ class ApiService
         $categoryId = intval($categoryId);
 
         if ($categoryId !== 0) {
-            $category = $portalCategoryModel->field('path')->where('id', $categoryId)->find();
+            $category = $portalCategoryModel->field('path')->where('id', '=', $categoryId)->find();
 
             if (empty($category)) {
                 return [];
@@ -389,12 +387,11 @@ class ApiService
         }
 
         $where = [
-            'status'      => 1,
-            'delete_time' => 0,
-            'path'        => ['like', "$categoryPath-%"]
+            ['status', '=', 1],
+            ['delete_time', '=', 0]
         ];
 
-        return $portalCategoryModel->where($where)->select();
+        return $portalCategoryModel->where($where)->whereLike('path', "$categoryPath-%")->select();
     }
 
     /**
@@ -415,8 +412,8 @@ class ApiService
         $portalCategoryModel = new PortalCategoryModel();
 
         $where = [
-            'status'      => 1,
-            'delete_time' => 0,
+            ['status', '=', 1],
+            ['delete_time', '=', 0]
         ];
 
         return $portalCategoryModel
@@ -437,7 +434,7 @@ class ApiService
         $data                = [];
         $portalCategoryModel = new PortalCategoryModel();
 
-        $path = $portalCategoryModel->where(['id' => $categoryId])->value('path');
+        $path = $portalCategoryModel->where('id', '=', $categoryId)->value('path');
 
         if (!empty($path)) {
             $parents = explode('-', $path);
@@ -446,7 +443,7 @@ class ApiService
             }
 
             if (!empty($parents)) {
-                $data = $portalCategoryModel->where('id', 'in', $parents)->order('path ASC')->select();
+                $data = $portalCategoryModel->whereIn('id', $parents)->order('path ASC')->select();
             }
         }
 
