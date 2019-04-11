@@ -390,11 +390,10 @@ class ApiService
 
         $where = [
             'status'      => 1,
-            'delete_time' => 0,
-            'path'        => ['like', "$categoryPath-%"]
+            'delete_time' => 0
         ];
 
-        return $portalCategoryModel->where($where)->select();
+        return $portalCategoryModel->where($where)->whereLike('path', "$categoryPath-%")->select();
     }
 
     /**
