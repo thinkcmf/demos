@@ -68,6 +68,7 @@ class Portal extends TagLib
         if (!empty($tag['page'])) {
             if (strpos($tag['page'], '$') === 0) {
                 $page = $tag['page'];
+                $this->autoBuildVar($page);
             } else {
                 $page = intval($tag['page']);
                 $page = "'{$page}'";
