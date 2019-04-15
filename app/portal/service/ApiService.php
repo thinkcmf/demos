@@ -418,11 +418,15 @@ class ApiService
             'delete_time' => 0,
         ];
 
-        return $portalCategoryModel
+        $temp = $portalCategoryModel
             ->where($where)
             ->where($paramWhere)
-            ->order($order)
-            ->select();
+            ->order($order);
+
+        if (!empty($param['ids'])) {
+            $temp->whereIn('id', $param['ids']);
+        }
+        return $temp->select();
     }
 
     /**
