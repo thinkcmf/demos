@@ -171,8 +171,7 @@ parse;
             }
         }
 
-        if (strpos($tag['order'], '$') === 0) {
-            $order = $tag['order'];
+        if (strpos($order, '$') === 0) {
             $this->autoBuildVar($order);
         } else {
             $order = "'{$order}'";
