@@ -86,8 +86,7 @@ class Portal extends TagLib
             }
         }
 
-        if (!empty($tag['order']) && strpos($tag['order'], '$') === 0) {
-            $order = $tag['order'];
+        if (!empty($order) && strpos($order, '$') === 0) {
             $this->autoBuildVar($order);
         } else {
             $order = "'{$order}'";
